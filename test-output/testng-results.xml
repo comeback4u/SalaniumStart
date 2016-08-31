@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" total="0" passed="0">
+<testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="6" started-at="2016-08-30T16:00:37Z" finished-at="2016-08-30T16:00:37Z">
+  <suite name="Default suite" duration-ms="88693" started-at="2016-08-31T07:03:22Z" finished-at="2016-08-31T07:04:50Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="6" started-at="2016-08-30T16:00:37Z" finished-at="2016-08-30T16:00:37Z">
+    <test name="Default test" duration-ms="88693" started-at="2016-08-31T07:03:22Z" finished-at="2016-08-31T07:04:50Z">
+      <class name="com.smartsense.ClozerSignUp">
+        <test-method status="PASS" signature="testClozerSignUp1()[pri:0, instance:com.smartsense.ClozerSignUp@2b98378d]" name="testClozerSignUp1" duration-ms="88667" started-at="2016-08-31T12:33:22Z" finished-at="2016-08-31T12:34:50Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testClozerSignUp1 -->
+      </class> <!-- com.smartsense.ClozerSignUp -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

@@ -49,7 +49,11 @@ public class ClozerSignUp {
 	public void testClozerSignUp1() throws Exception {
 		
 		//move to Sign Up page
+		Log.logSetup();
+		ExcelUtils.setExcelFile(Constant.FILE_FULL_PATH , Constant.SHEET_NAME);
 		Log.startTestCase("Clozer Signup Phase 1");
+		baseUrl = "http://dev01.goclozer.com/";
+		driver = new ChromeDriver();
 		driver.get(baseUrl + "/");
 		Log.info("Open URL");
 		Thread.sleep(1000);
@@ -83,7 +87,7 @@ public class ClozerSignUp {
 		//move to next page
 		driver.findElement(By.xpath("//button[@type='submit']")).submit();
 		Log.info("Click on Submit");
-		Thread.sleep(1000);
+		Thread.sleep(3000);
 		
 		//close popup
 		driver.findElement(By.xpath("//div[@id='emailSentModal']/div/div/div[2]/div/div/button")).click();
