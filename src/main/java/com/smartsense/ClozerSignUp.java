@@ -11,8 +11,6 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.HasInputDevices;
-import org.openqa.selenium.interactions.Mouse;
 
 import Utill.Constant;
 import Utill.ExcelUtils;
@@ -21,8 +19,8 @@ import Utill.Log;
 public class ClozerSignUp {
 	private WebDriver driver;
 	private String baseUrl;
-	private StringBuffer verificationErrors = new StringBuffer();
-	private Mouse mouse;
+//	private StringBuffer verificationErrors = new StringBuffer();
+//	private Mouse mouse;
 
 	@Before
 	public void setUp() throws Exception {
@@ -38,7 +36,7 @@ public class ClozerSignUp {
                 "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
 		driver = new ChromeDriver();
 		
-		mouse = ((HasInputDevices) driver).getMouse();
+//		mouse = ((HasInputDevices) driver).getMouse();
 		baseUrl = "http://dev01.goclozer.com/";
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
@@ -49,14 +47,11 @@ public class ClozerSignUp {
 	public void testClozerSignUp1() throws Exception {
 		
 		//move to Sign Up page
-		Log.logSetup();
-		ExcelUtils.setExcelFile(Constant.FILE_FULL_PATH , Constant.SHEET_NAME);
-		Log.startTestCase("Clozer Signup Phase 1");
-		baseUrl = "http://dev01.goclozer.com/";
-		driver = new ChromeDriver();
+		
 		driver.get(baseUrl + "/");
 		Log.info("Open URL");
 		Thread.sleep(1000);
+		driver.findElement(By.linkText("SIGN UP")).click();
 		driver.findElement(By.linkText("SIGN UP")).click();
 		Log.info("Click on Signup");
 		Thread.sleep(2000);

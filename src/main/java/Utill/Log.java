@@ -10,7 +10,7 @@ public class Log {
 
 	// Initialize Log4j logs
 
-	private static Logger Log = LogManager.getLogger(Log.class);;//
+	private static Logger Log = LogManager.getLogger(Log.class);//
 
 	// private static Logger Log = Logger.getLogger("anything");
 	// This is to print log for the beginning of the test case, as we usually

@@ -1,35 +1,78 @@
 package Utill;
 
-import java.util.concurrent.TimeUnit;
+import java.io.File;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-
+import org.openqa.selenium.WebElement;
 public class Utils {
-	public static WebDriver driver = null;
 
-	public static WebDriver openBrowser(int iTestCaseRow) throws Exception {
+	public static final String absolutePath = System.getProperty("user.dir");
 
-		String sBrowserName;
+	protected void saveScreenshot(WebDriver driver) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		String date = sdf.format(new Date());
+		String url = driver.getCurrentUrl().replaceAll("[\\/:*\\?\"<>\\|]", "_");
+		String ext = ".png";
+		String path = getScreenshotSavePath() + "/" + date + "_" + url + ext;
 
 		try {
-
-			sBrowserName = ExcelUtils.getCellData(iTestCaseRow, Constant.Col_Browser);
-
-			if (sBrowserName.equals("Mozilla")) {
-				driver = new FirefoxDriver();
-				Log.info("New driver instantiated");
-				driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-				Log.info("Implicit wait applied on the driver for 10 seconds");
-				driver.get(Constant.URL);
-				Log.info("Web application launched successfully");
+			if (driver instanceof TakesScreenshot) {
+				File tmpFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+				org.openqa.selenium.io.FileHandler.copy(tmpFile, new File(path));
 			}
-
 		} catch (Exception e) {
-			Log.error("Class Utils | Method OpenBrowser | Exception desc : " + e.getMessage());
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String getScreenshotSavePath() {
+		String packageName = this.getClass().getPackage().getName();
+		File dir = new File(screenshotSavePath + "/" + packageName + "/");
+		dir.mkdirs();
+		return dir.getAbsolutePath();
+	}
+
+	protected String screenshotSavePath = absolutePath + "/logs/screenshot/";
+
+	public static String isLinkBroken(URL url) throws Exception {
+		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		try {
+			connection.connect();
+			String response = connection.getResponseMessage();
+			connection.disconnect();
+			return response;
 		}
 
-		return driver;
-
+		catch (Exception exp) {
+			return exp.getMessage();
+		}
 	}
+
+	public static List<WebElement> findAllLinks(WebDriver driver) {
+		List<WebElement> elementList = new ArrayList();
+		elementList = driver.findElements(By.tagName("a"));
+		elementList.addAll(driver.findElements(By.tagName("img")));
+		List<WebElement> finalList = new ArrayList();
+		
+		for (WebElement element : elementList) {
+			if (element.getAttribute("href") != null) {
+				finalList.add(element);
+			}
+		}
+		return finalList;
+	}
+	
+//	public static void scrollToWebElement(WebDriver driver,String id){
+//		driver.executeScript("document.getElementById('text-8').scrollIntoView(true);");
+//	}
+
 }
